@@ -15,7 +15,7 @@ class Welcome extends StatelessWidget {
           "SuperHalo!",
           textDirection: TextDirection.ltr,
           style: TextStyle(
-            color: Colors.black,
+            color: Color.fromRGBO(34, 187, 255, 1.0),
             fontSize: 46,
             decoration: TextDecoration.none
           )
