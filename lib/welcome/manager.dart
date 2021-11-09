@@ -5,6 +5,7 @@ class Manager extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("管理内容");
+    // TODO: 管理内容
+    return const Text("TODO 管理内容");
   }
 }

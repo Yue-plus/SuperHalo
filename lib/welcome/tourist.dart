@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 
-class Tourist extends StatelessWidget {
+class Tourist extends StatefulWidget {
   const Tourist({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _TouristState();
+}
+
+class _TouristState extends State<Tourist> {
+  final _hostLink = TextEditingController();
+  final _accessKey = TextEditingController();
+
+  _validatorHostLink(String? value) {
+    // TODO: 验证 URL 合法性
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,43 +24,52 @@ class Tourist extends StatelessWidget {
           width: 800,
           height: 800,
           padding: const EdgeInsets.all(8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Text(
-                '添加 Halo 主机：',
-                textDirection: TextDirection.ltr,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 30
-                ),
-              ),
-              SizedBox(height: 16),
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: '主机链接',
-                ),
-              ),
-              SizedBox(height: 16),
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Access Key',
-                ),
-              ),
-              SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: null,
-                child: Text(
-                  "LINK START!",
+          child: Form(
+            autovalidateMode: AutovalidateMode.always,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  '添加 Halo 主机：',
+                  textDirection: TextDirection.ltr,
                   style: TextStyle(
-                    fontSize: 23
+                      color: Colors.black,
+                      fontSize: 30
                   ),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _hostLink,
+                  validator: (v) => _validatorHostLink(v),
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: '主机 API 链接',
+                      hintText: 'http(s)://example.com:<port>/api/'
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _accessKey,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Access Key',
+                  ),
+                ),
+                const SizedBox(height: 16),
+                MaterialButton(
+                  onPressed: () {
+                    print(_hostLink);
+                  },
+                  child: const Text(
+                    "LINK START!",
+                    style: TextStyle(
+                        fontSize: 23
+                    ),
+                  )
                 )
-              )
-            ]
+              ]
+            )
           ),
         ),
       ),
