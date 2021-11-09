@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../content-api/users.dart';
 
 class Tourist extends StatefulWidget {
   const Tourist({Key? key}) : super(key: key);
@@ -8,12 +10,19 @@ class Tourist extends StatefulWidget {
 }
 
 class _TouristState extends State<Tourist> {
-  final _hostLink = TextEditingController();
-  final _accessKey = TextEditingController();
+  final _hostLink = TextEditingController(text: 'http://localhost:8090/api/');
+  final _accessKey = TextEditingController(text: '123');
 
   _validatorHostLink(String? value) {
     // TODO: 验证 URL 合法性
     return null;
+  }
+
+  void _linkStart() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    await sp.setString('HOST_LINK', _hostLink.text);
+    await sp.setString('ACCESS_KEY', _accessKey.text);
+    Users.getProfile();
   }
 
   @override
@@ -34,8 +43,8 @@ class _TouristState extends State<Tourist> {
                   '添加 Halo 主机：',
                   textDirection: TextDirection.ltr,
                   style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30
+                    color: Colors.black,
+                    fontSize: 30
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -43,10 +52,10 @@ class _TouristState extends State<Tourist> {
                   controller: _hostLink,
                   validator: (v) => _validatorHostLink(v),
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '主机 API 链接',
-                      hintText: 'http(s)://example.com:<port>/api/'
-                  ),
+                    border: OutlineInputBorder(),
+                    labelText: '主机 API 链接',
+                    hintText: 'http(s)://example.com:8090/api/'
+                  )
                 ),
                 const SizedBox(height: 16),
                 TextField(
@@ -58,13 +67,11 @@ class _TouristState extends State<Tourist> {
                 ),
                 const SizedBox(height: 16),
                 MaterialButton(
-                  onPressed: () {
-                    print(_hostLink);
-                  },
+                  onPressed: _linkStart,
                   child: const Text(
                     "LINK START!",
                     style: TextStyle(
-                        fontSize: 23
+                      fontSize: 23
                     ),
                   )
                 )
