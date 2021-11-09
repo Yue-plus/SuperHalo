@@ -6,9 +6,12 @@ class Tourist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
+      body: Center(
+        child: Container(
+          width: 800,
+          height: 800,
+          padding: const EdgeInsets.all(8),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
@@ -45,6 +48,7 @@ class Tourist extends StatelessWidget {
                 )
               )
             ]
+          ),
         ),
       ),
     );
