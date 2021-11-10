@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../content-api/users.dart';
+import 'package:super_halo/api/content/users.dart';
 
 class Tourist extends StatefulWidget {
   const Tourist({Key? key}) : super(key: key);
