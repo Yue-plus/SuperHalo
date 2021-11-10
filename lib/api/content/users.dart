@@ -1,24 +1,8 @@
-import 'dart:convert';
+import 'dart:async';
 
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
+import 'package:super_halo/api/halo.dart';
 
 class Profile {
-  final int status;
-  final String message;
-  final String? devMessage;
-  final ProfileData data;
-
-  Profile(this.status, this.message, this.devMessage, this.data);
-
-  Profile.fromJson(Map<String, dynamic> json)
-      : status = json['status'],
-        message = json['message'],
-        devMessage = json['devMessage'],
-        data = ProfileData.formJson(json['data']);
-}
-
-class ProfileData {
   final int id;
   final String username;
   final String nickname;
@@ -29,19 +13,7 @@ class ProfileData {
   final int createTime;
   final int updateTime;
 
-  ProfileData(
-      this.id,
-      this.username,
-      this.nickname,
-      this.email,
-      this.avatar,
-      this.description,
-      this.mfaType,
-      this.createTime,
-      this.updateTime
-  );
-
-  ProfileData.formJson(Map<String, dynamic> json)
+  Profile.formJson(Map<dynamic, dynamic> json)
     : id = json['id'],
       username = json['username'],
       nickname = json['nickname'],
@@ -54,23 +26,12 @@ class ProfileData {
 }
 
 class Users {
-  static getProfile() async {
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    final _hostLink = sp.getString('HOST_LINK');
-    final _accessKey = sp.getString('ACCESS_KEY');
-
-    final response = await http.get(
-        Uri.parse(_hostLink! + 'content/users/profile'),
-        headers: { 'API-Authorization': _accessKey! }
-    );
-
-    final Map<String, dynamic> responseBody = await jsonDecode(response.body);
-
-    var profile = Profile.fromJson(responseBody);
-
-    print(_hostLink + '###' + _accessKey);
-    print(response.body);
-    print(responseBody['message']);
-    print(profile.data.avatar);
+  Users() {
+    Halo halo = Halo.formLink('content/users/profile');
+    Profile profile = Profile.formJson(halo.data);
+    Timer(const Duration(minutes: 3), () {
+      print(halo.message);
+      print(profile.avatar);
+    });
   }
 }
