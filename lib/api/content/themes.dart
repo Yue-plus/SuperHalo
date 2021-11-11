@@ -68,7 +68,7 @@ class ActivationSettings {
       codePretty = json['code_pretty'];
 }
 
-class Theme {
+class Themes {
   static Future<Activation?> getActivation() async {
     final GetHalo get = await GetHalo.formLink('content/themes/activation');
 
