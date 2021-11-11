@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:super_halo/api/get_halo.dart';
 
 // 参考：https://api.halo.run/content-api.html#operation/getProfileUsingGET_1
-class Profile {
+class HaloProfile {
   final int id;
   final String username;
   final String nickname;
@@ -14,7 +14,7 @@ class Profile {
   final int createTime;
   final int updateTime;
 
-  Profile.formJson(Map<String, dynamic> json)
+  HaloProfile.formJson(Map<String, dynamic> json)
     : id = json['id'],
       username = json['username'],
       nickname = json['nickname'],
@@ -26,12 +26,12 @@ class Profile {
       updateTime = json['updateTime'];
 }
 
-class Users {
-  static Future<Profile?> getProfile() async {
-    final GetHalo get = await GetHalo.formLink('content/users/profile');
+class HaloUsers {
+  static Future<HaloProfile?> getProfile() async {
+    final get = await GetHalo.formLink('content/users/profile');
 
     if (get.status == 200) {
-      return Profile.formJson(get.data);
+      return HaloProfile.formJson(get.data);
     } else {
       // TODO: 处理失败请求
       return null;

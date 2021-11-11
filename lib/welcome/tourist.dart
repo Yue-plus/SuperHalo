@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:super_halo/api/content/users.dart';
 
 class Tourist extends StatefulWidget {
   const Tourist({Key? key}) : super(key: key);
@@ -22,10 +21,7 @@ class _TouristState extends State<Tourist> {
     SharedPreferences sp = await SharedPreferences.getInstance();
     await sp.setString('HOST_LINK', _hostLink.text);
     await sp.setString('ACCESS_KEY', _accessKey.text);
-    Profile? profile = await Users.getProfile();
-    if (profile != null) {
-      print(profile.avatar);
-    }
+    // TODO: 跳转到主页
   }
 
   @override

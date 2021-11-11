@@ -1,7 +1,7 @@
 import 'package:super_halo/api/get_halo.dart';
 
 // 参考：https://api.halo.run/content-api.html#operation/getByUsingGET_18
-class Activation {
+class HaloActivation {
   final String id;
   final String name;
   final String website;
@@ -23,7 +23,7 @@ class Activation {
   final String? sheetMetaField;
   final bool activated;
 
-  Activation.formJson(Map<String, dynamic> json)
+  HaloActivation.formJson(Map<String, dynamic> json)
     : id = json['id'],
       name = json['name'],
       website = json['website'],
@@ -47,7 +47,7 @@ class Activation {
 }
 
 // 参考：https://api.halo.run/content-api.html#operation/listSettingsByUsingGET_2
-class ActivationSettings {
+class HaloActivationSettings {
   final bool postTitleUppper;
   final String scrollbar;
   final bool avatarCircle;
@@ -57,7 +57,7 @@ class ActivationSettings {
   final String googleColor;
   final String? codePretty;
 
-  ActivationSettings.formJson(Map<String, dynamic> json)
+  HaloActivationSettings.formJson(Map<String, dynamic> json)
     : postTitleUppper = json['post_title_uppper'],
       scrollbar = json['scrollbar'],
       avatarCircle = json['avatar_circle'],
@@ -68,24 +68,23 @@ class ActivationSettings {
       codePretty = json['code_pretty'];
 }
 
-class Themes {
-  static Future<Activation?> getActivation() async {
-    final GetHalo get = await GetHalo.formLink('content/themes/activation');
+class HaloThemes {
+  static Future<HaloActivation?> getActivation() async {
+    final get = await GetHalo.formLink('content/themes/activation');
 
     if (get.status == 200) {
-      return Activation.formJson(get.data);
+      return HaloActivation.formJson(get.data);
     } else {
       // TODO: 处理失败请求
       return null;
     }
   }
 
-  static Future<ActivationSettings?> getActivationSettings() async {
-    final GetHalo get
-      = await GetHalo.formLink('content/themes/activation/settings');
+  static Future<HaloActivationSettings?> getActivationSettings() async {
+    final get = await GetHalo.formLink('content/themes/activation/settings');
 
     if (get.status == 200) {
-      return ActivationSettings.formJson(get.data);
+      return HaloActivationSettings.formJson(get.data);
     } else {
       // TODO: 处理失败请求
       return null;
