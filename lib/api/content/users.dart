@@ -28,10 +28,20 @@ class Profile {
 class Users {
   Users() {
     Halo halo = Halo.formLink('content/users/profile');
-    Profile profile = Profile.formJson(halo.data);
-    Timer(const Duration(minutes: 3), () {
-      print(halo.message);
-      print(profile.avatar);
-    });
+
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        Profile profile = Profile.formJson(halo.data);
+
+        Future.delayed(
+          const Duration(seconds: 1),
+          () {
+            print(halo.message);
+            print(profile.avatar);
+          }
+        );
+      }
+    );
   }
 }

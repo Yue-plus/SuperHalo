@@ -32,13 +32,6 @@ class Halo {
         message = responseBody['message'];
         devMessage = responseBody['devMessage'];
         data = responseBody['data'];
-
-        // return Halo(
-        //     response.statusCode,
-        //     responseBody['message'],
-        //     responseBody['devMessage'],
-        //     responseBody['data']
-        // );
       });
     });
   }
