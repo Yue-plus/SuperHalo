@@ -22,7 +22,10 @@ class _TouristState extends State<Tourist> {
     SharedPreferences sp = await SharedPreferences.getInstance();
     await sp.setString('HOST_LINK', _hostLink.text);
     await sp.setString('ACCESS_KEY', _accessKey.text);
-    Users();
+    Profile? profile = await Users.getProfile();
+    if (profile != null) {
+      print(profile.avatar);
+    }
   }
 
   @override

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:super_halo/api/halo.dart';
+import 'package:super_halo/api/get_halo.dart';
 
 class Profile {
   final int id;
@@ -13,7 +13,7 @@ class Profile {
   final int createTime;
   final int updateTime;
 
-  Profile.formJson(Map<dynamic, dynamic> json)
+  Profile.formJson(Map<String, dynamic> json)
     : id = json['id'],
       username = json['username'],
       nickname = json['nickname'],
@@ -26,22 +26,12 @@ class Profile {
 }
 
 class Users {
-  Users() {
-    Halo halo = Halo.formLink('content/users/profile');
-
-    Future.delayed(
-      const Duration(seconds: 1),
-      () {
-        Profile profile = Profile.formJson(halo.data);
-
-        Future.delayed(
-          const Duration(seconds: 1),
-          () {
-            print(halo.message);
-            print(profile.avatar);
-          }
-        );
-      }
-    );
+  static Future<Profile?> getProfile() async {
+    final GetHalo get = await GetHalo.formLink('content/users/profile');
+    if (get.status == 200) {
+      return Profile.formJson(get.data);
+    } else {
+      return null;
+    }
   }
 }

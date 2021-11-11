@@ -8,7 +8,7 @@ class GetHalo {
   final int status;
   final String message;
   final String? devMessage;
-  final Map data;
+  final Map<String, dynamic> data;
 
   GetHalo(this.status, this.message, this.devMessage, this.data);
 
