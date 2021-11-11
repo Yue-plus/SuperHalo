@@ -6,7 +6,7 @@ void main() async {
   await preparation();
 
   test('content/tags', () async {
-    // TODO: 测试代码
-    // List<HaloTag>? tagList = await HaloTags.getTags();
+    List<HaloTag>? haloTags = await HaloTags.getTags();
+    expect(haloTags!, haloTags);
   });
 }

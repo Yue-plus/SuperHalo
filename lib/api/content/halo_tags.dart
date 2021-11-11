@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:super_halo/api/get_halo.dart';
 
 class HaloTag {
@@ -18,13 +20,16 @@ class HaloTag {
 }
 
 class HaloTags {
-  static Future<HaloTags?> getTags() async {
+  static Future<List<HaloTag>?> getTags() async {
     final get = await GetHalo.formLink('content/tags');
+    final List<dynamic> data = jsonDecode(get.data);
 
     if (get.status == 200) {
-      // TODO: 序列化 JSON
-      return null;
-      // return Tag.formJson(get.data);
+      final List<HaloTag> tags = [];
+      for (var element in data) {
+        tags.add(HaloTag.formJson(element));
+      }
+      return tags;
     } else {
       // TODO: 处理失败请求
       return null;

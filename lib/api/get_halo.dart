@@ -8,7 +8,7 @@ class GetHalo {
   final int status;
   final String message;
   final String? devMessage;
-  final Map<String, dynamic> data;
+  final String data;
 
   GetHalo(this.status, this.message, this.devMessage, this.data);
 
@@ -30,7 +30,7 @@ class GetHalo {
         response.statusCode,
         responseBody['message'],
         responseBody['devMessage'],
-        responseBody['data']
+        jsonEncode(responseBody['data'])
     );
   }
 }

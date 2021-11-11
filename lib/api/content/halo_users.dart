@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:super_halo/api/get_halo.dart';
 
@@ -31,7 +32,7 @@ class HaloUsers {
     final get = await GetHalo.formLink('content/users/profile');
 
     if (get.status == 200) {
-      return HaloProfile.formJson(get.data);
+      return HaloProfile.formJson(jsonDecode(get.data));
     } else {
       // TODO: 处理失败请求
       return null;

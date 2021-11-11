@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:super_halo/api/get_halo.dart';
 
 // 参考：https://api.halo.run/content-api.html#operation/getByUsingGET_18
@@ -73,7 +75,7 @@ class HaloThemes {
     final get = await GetHalo.formLink('content/themes/activation');
 
     if (get.status == 200) {
-      return HaloActivation.formJson(get.data);
+      return HaloActivation.formJson(jsonDecode(get.data));
     } else {
       // TODO: 处理失败请求
       return null;
@@ -84,7 +86,7 @@ class HaloThemes {
     final get = await GetHalo.formLink('content/themes/activation/settings');
 
     if (get.status == 200) {
-      return HaloActivationSettings.formJson(get.data);
+      return HaloActivationSettings.formJson(jsonDecode(get.data));
     } else {
       // TODO: 处理失败请求
       return null;
