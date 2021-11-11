@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:super_halo/api/get_halo.dart';
 
+// 参考：https://api.halo.run/content-api.html#operation/getProfileUsingGET_1
 class Profile {
   final int id;
   final String username;
@@ -28,9 +29,11 @@ class Profile {
 class Users {
   static Future<Profile?> getProfile() async {
     final GetHalo get = await GetHalo.formLink('content/users/profile');
+
     if (get.status == 200) {
       return Profile.formJson(get.data);
     } else {
+      // TODO: 处理失败请求
       return null;
     }
   }
