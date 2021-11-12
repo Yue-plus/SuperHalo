@@ -9,4 +9,8 @@ void main() async {
     List<HaloTag>? haloTags = await HaloTags.getTags();
     expect(haloTags!, haloTags);
   });
+
+  test('content/tags/{slug}/posts', () async {
+    await HaloTags.getPostsByTagSlug('markdown');
+  });
 }

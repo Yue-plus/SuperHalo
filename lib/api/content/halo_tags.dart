@@ -19,19 +19,32 @@ class HaloTag {
       fullPath = json['fullPath'];
 }
 
+class ListsPostsByTagSlug {
+  // TODO: 待完成类
+}
+
 class HaloTags {
   static Future<List<HaloTag>?> getTags() async {
     final get = await GetHalo.formLink('content/tags');
-    final List<dynamic> data = jsonDecode(get.data);
 
     if (get.status == 200) {
       final List<HaloTag> tags = [];
-      for (var element in data) {
+      for (var element in jsonDecode(get.data)) {
         tags.add(HaloTag.formJson(element));
       }
       return tags;
     } else {
       // TODO: 处理失败请求
+      return null;
+    }
+  }
+
+  static getPostsByTagSlug(String slug) async {
+    final get = await GetHalo.formLink('content/tags/$slug/posts');
+
+    if (get.status == 200) {
+      print(get.data);
+    } else {
       return null;
     }
   }
