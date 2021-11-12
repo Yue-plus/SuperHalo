@@ -4,15 +4,15 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-class GetHalo {
+class GetRequest {
   final int status;
   final String message;
   final String? devMessage;
   final String data;
 
-  GetHalo(this.status, this.message, this.devMessage, this.data);
+  GetRequest(this.status, this.message, this.devMessage, this.data);
 
-  static Future<GetHalo> formLink(String link) async {
+  static Future<GetRequest> formLink(String link) async {
     // 获取基本信息
     final sp = await SharedPreferences.getInstance();
     final hostLink = sp.getString('HOST_LINK')!;
@@ -26,7 +26,7 @@ class GetHalo {
 
     // JSON 序列化
     var responseBody = jsonDecode(response.body);
-    return GetHalo(
+    return GetRequest(
         response.statusCode,
         responseBody['message'],
         responseBody['devMessage'],

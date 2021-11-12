@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:super_halo/api/get_halo.dart';
+import 'package:super_halo/halo_api/get_request.dart';
 
 // 参考：https://api.halo.run/content-api.html#operation/getProfileUsingGET_1
-class HaloProfile {
+class BloggerProfile {
   final int id;
   final String username;
   final String nickname;
@@ -15,7 +15,7 @@ class HaloProfile {
   final int createTime;
   final int updateTime;
 
-  HaloProfile.formJson(Map<String, dynamic> json)
+  BloggerProfile.formJson(Map<String, dynamic> json)
     : id = json['id'],
       username = json['username'],
       nickname = json['nickname'],
@@ -27,12 +27,12 @@ class HaloProfile {
       updateTime = json['updateTime'];
 }
 
-class HaloUsers {
-  static Future<HaloProfile?> getProfile() async {
-    final get = await GetHalo.formLink('content/users/profile');
+class UserController {
+  static Future<BloggerProfile?> getsBloggerProfile() async {
+    final get = await GetRequest.formLink('content/users/profile');
 
     if (get.status == 200) {
-      return HaloProfile.formJson(jsonDecode(get.data));
+      return BloggerProfile.formJson(jsonDecode(get.data));
     } else {
       // TODO: 处理失败请求
       return null;

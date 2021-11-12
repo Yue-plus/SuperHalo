@@ -1,16 +1,16 @@
 import 'preparation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:super_halo/api/content/halo_tags.dart';
+import 'package:super_halo/halo_api/content/tag_controller.dart';
 
 void main() async {
   await preparation();
 
   test('content/tags', () async {
-    List<HaloTag>? haloTags = await HaloTags.getTags();
+    List<Tag>? haloTags = await TagController.getListTags();
     expect(haloTags!, haloTags);
   });
 
   test('content/tags/{slug}/posts', () async {
-    await HaloTags.getPostsByTagSlug('markdown');
+    await TagController.getListsPostsByTagSlug('markdown');
   });
 }

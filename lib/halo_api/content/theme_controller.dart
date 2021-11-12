@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:super_halo/api/get_halo.dart';
+import 'package:super_halo/halo_api/get_request.dart';
 
 // 参考：https://api.halo.run/content-api.html#operation/getByUsingGET_18
-class HaloActivation {
+class ActivatedThemeProperty {
   final String id;
   final String name;
   final String website;
@@ -25,7 +25,7 @@ class HaloActivation {
   final String? sheetMetaField;
   final bool activated;
 
-  HaloActivation.formJson(Map<String, dynamic> json)
+  ActivatedThemeProperty.formJson(Map<String, dynamic> json)
     : id = json['id'],
       name = json['name'],
       website = json['website'],
@@ -70,20 +70,20 @@ class HaloActivationSettings {
       codePretty = json['code_pretty'];
 }
 
-class HaloThemes {
-  static Future<HaloActivation?> getActivation() async {
-    final get = await GetHalo.formLink('content/themes/activation');
+class ThemeController {
+  static Future<ActivatedThemeProperty?> getsActivatedThemeProperty() async {
+    final get = await GetRequest.formLink('content/themes/activation');
 
     if (get.status == 200) {
-      return HaloActivation.formJson(jsonDecode(get.data));
+      return ActivatedThemeProperty.formJson(jsonDecode(get.data));
     } else {
       // TODO: 处理失败请求
       return null;
     }
   }
 
-  static Future<HaloActivationSettings?> getActivationSettings() async {
-    final get = await GetHalo.formLink('content/themes/activation/settings');
+  static Future<HaloActivationSettings?> getListsActivatedThemeSettings() async {
+    final get = await GetRequest.formLink('content/themes/activation/settings');
 
     if (get.status == 200) {
       return HaloActivationSettings.formJson(jsonDecode(get.data));

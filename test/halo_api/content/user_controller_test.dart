@@ -1,12 +1,12 @@
 import 'preparation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:super_halo/api/content/halo_users.dart';
+import 'package:super_halo/halo_api/content/user_controller.dart';
 
 void main() async {
   await preparation();
 
   test('content/users/profile', () async {
-    HaloProfile? profile = await HaloUsers.getProfile();
+    BloggerProfile? profile = await UserController.getsBloggerProfile();
     expect(profile!, profile);
   });
 }
