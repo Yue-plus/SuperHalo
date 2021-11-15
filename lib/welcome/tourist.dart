@@ -17,11 +17,12 @@ class _TouristState extends State<Tourist> {
     return null;
   }
 
-  void _linkStart() async {
+  _linkStart(BuildContext context) async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     await sp.setString('HOST_LINK', _hostLink.text);
     await sp.setString('ACCESS_KEY', _accessKey.text);
-    // TODO: 跳转到主页
+
+    Navigator.pushNamed(context, '/');
   }
 
   @override
@@ -66,7 +67,7 @@ class _TouristState extends State<Tourist> {
                 ),
                 const SizedBox(height: 16),
                 MaterialButton(
-                  onPressed: _linkStart,
+                  onPressed: () => _linkStart(context),
                   child: const Text(
                     "LINK START!",
                     style: TextStyle(
