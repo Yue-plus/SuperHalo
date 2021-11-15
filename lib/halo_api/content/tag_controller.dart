@@ -24,6 +24,7 @@ class ListsPostsByTagSlug {
 }
 
 class TagController {
+  /// 列出标签
   static Future<List<Tag>?> getListTags() async {
     final get = await GetRequest.formLink('content/tags');
 
@@ -39,6 +40,7 @@ class TagController {
     }
   }
 
+  /// 按标签 [slug] 列出博文
   static getListsPostsByTagSlug(String slug) async {
     final get = await GetRequest.formLink('content/tags/$slug/posts');
 

@@ -28,6 +28,7 @@ class BloggerProfile {
 }
 
 class UserController {
+  /// 获取博客简介
   static Future<BloggerProfile?> getsBloggerProfile() async {
     final get = await GetRequest.formLink('content/users/profile');
 

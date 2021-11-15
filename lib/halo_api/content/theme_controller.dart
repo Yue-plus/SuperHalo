@@ -71,6 +71,7 @@ class HaloActivationSettings {
 }
 
 class ThemeController {
+  /// 获取激活的主题属性
   static Future<ActivatedThemeProperty?> getsActivatedThemeProperty() async {
     final get = await GetRequest.formLink('content/themes/activation');
 
@@ -82,6 +83,7 @@ class ThemeController {
     }
   }
 
+  /// 列出激活的主题设置
   static Future<HaloActivationSettings?> getListsActivatedThemeSettings() async {
     final get = await GetRequest.formLink('content/themes/activation/settings');
 
