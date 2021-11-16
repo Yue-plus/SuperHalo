@@ -28,14 +28,13 @@ class TagController {
   static Future<List<Tag>?> getListTags() async {
     final get = await GetRequest.formLink('content/tags');
 
-    if (get!.status == 200) {
+    if (get != null) {
       final List<Tag> tags = [];
       for (var element in jsonDecode(get.data)) {
         tags.add(Tag.formJson(element));
       }
       return tags;
     } else {
-      // TODO: 处理失败请求
       return null;
     }
   }
@@ -44,7 +43,7 @@ class TagController {
   static getListsPostsByTagSlug(String slug) async {
     final get = await GetRequest.formLink('content/tags/$slug/posts');
 
-    if (get!.status == 200) {
+    if (get != null) {
       print(get.data);
     } else {
       return null;

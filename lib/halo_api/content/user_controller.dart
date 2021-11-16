@@ -34,7 +34,7 @@ class UserController {
   static Future<BloggerProfile?> getsBloggerProfile(
       [BuildContext? context]) async {
     final get = await GetRequest.formLink('content/users/profile', context);
-    if (get!.status == 200) {
+    if (get != null) {
       return BloggerProfile.formJson(jsonDecode(get.data));
     } else {
       return null;
