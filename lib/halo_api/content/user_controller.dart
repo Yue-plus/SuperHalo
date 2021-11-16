@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:super_halo/halo_api/get_request.dart';
 
 // 参考：https://api.halo.run/content-api.html#operation/getProfileUsingGET_1
@@ -28,14 +30,13 @@ class BloggerProfile {
 }
 
 class UserController {
-  /// 获取博客简介
-  static Future<BloggerProfile?> getsBloggerProfile() async {
-    final get = await GetRequest.formLink('content/users/profile');
-
-    if (get.status == 200) {
+  /// 获取博客简介，如果传入 [context] 则会弹出提示框
+  static Future<BloggerProfile?> getsBloggerProfile(
+      [BuildContext? context]) async {
+    final get = await GetRequest.formLink('content/users/profile', context);
+    if (get!.status == 200) {
       return BloggerProfile.formJson(jsonDecode(get.data));
     } else {
-      // TODO: 处理失败请求
       return null;
     }
   }

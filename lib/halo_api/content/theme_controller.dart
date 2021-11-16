@@ -75,7 +75,7 @@ class ThemeController {
   static Future<ActivatedThemeProperty?> getsActivatedThemeProperty() async {
     final get = await GetRequest.formLink('content/themes/activation');
 
-    if (get.status == 200) {
+    if (get!.status == 200) {
       return ActivatedThemeProperty.formJson(jsonDecode(get.data));
     } else {
       // TODO: 处理失败请求
@@ -87,7 +87,7 @@ class ThemeController {
   static Future<HaloActivationSettings?> getListsActivatedThemeSettings() async {
     final get = await GetRequest.formLink('content/themes/activation/settings');
 
-    if (get.status == 200) {
+    if (get!.status == 200) {
       return HaloActivationSettings.formJson(jsonDecode(get.data));
     } else {
       // TODO: 处理失败请求

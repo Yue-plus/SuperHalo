@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,25 +14,43 @@ class GetRequest {
 
   GetRequest(this.status, this.message, this.devMessage, this.data);
 
-  static Future<GetRequest> formLink(String link) async {
+  static Future<GetRequest?> formLink(String link,
+      [BuildContext? context]) async {
     // 获取基本信息
     final sp = await SharedPreferences.getInstance();
     final hostLink = sp.getString('HOST_LINK')!;
     final accessKey = sp.getString('ACCESS_KEY')!;
 
-    // 发送 GET 请求
-    final response = await http.get(
-        Uri.parse(hostLink + link),
-        headers: { 'API-Authorization': accessKey }
-    );
+    try {
+      // 发送 GET 请求
+      final response = await http.get(Uri.parse(hostLink + link),
+          headers: {'API-Authorization': accessKey});
+      final responseBody = jsonDecode(response.body);
 
-    // JSON 序列化
-    var responseBody = jsonDecode(response.body);
-    return GetRequest(
-        response.statusCode,
-        responseBody['message'],
-        responseBody['devMessage'],
-        jsonEncode(responseBody['data'])
-    );
+      if (response.statusCode == 200) {
+        return GetRequest(response.statusCode, responseBody['message'],
+            responseBody['devMessage'], jsonEncode(responseBody['data']));
+      } else {
+        if (context != null) {
+          return showDialog(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                  title: Text(response.statusCode.toString()),
+                  content: Text(responseBody['message'])));
+        } else {
+          return null;
+        }
+      }
+    } catch (e) {
+      if (context != null) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) =>
+                AlertDialog(title: Text(e.toString())));
+      } else {
+        rethrow;
+      }
+    }
+    return null;
   }
 }

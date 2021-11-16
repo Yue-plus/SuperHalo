@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:super_halo/halo_api/content/user_controller.dart';
+
 class Tourist extends StatefulWidget {
   const Tourist({Key? key}) : super(key: key);
 
@@ -32,7 +34,13 @@ class _TouristState extends State<Tourist> {
     await sp.setString('HOST_LINK', _hostLink.text);
     await sp.setString('ACCESS_KEY', _accessKey.text);
 
-    Navigator.pushNamed(context, '/');
+    BloggerProfile? bloggerProfile;
+
+    bloggerProfile = await UserController.getsBloggerProfile(context);
+
+    if (bloggerProfile != null) {
+      Navigator.pushNamed(context, '/');
+    }
   }
 
   @override
