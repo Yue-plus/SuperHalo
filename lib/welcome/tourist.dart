@@ -13,7 +13,17 @@ class _TouristState extends State<Tourist> {
   final _accessKey = TextEditingController(text: '123');
 
   _validatorHostLink(String? value) {
+    if (value == null || value.isEmpty) {
+      return '请输入 Halo 主机 API 链接';
+    }
     // TODO: 验证 URL 合法性
+    return null;
+  }
+
+  _validatorAccessKey(String? value) {
+    if (value == null || value.isEmpty) {
+      return '请输入 Halo 主机 AccessKey';
+    }
     return null;
   }
 
@@ -58,8 +68,9 @@ class _TouristState extends State<Tourist> {
                   )
                 ),
                 const SizedBox(height: 16),
-                TextField(
+                TextFormField(
                   controller: _accessKey,
+                  validator: (v) => _validatorAccessKey(v),
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Access Key',
