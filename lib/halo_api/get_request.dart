@@ -32,6 +32,7 @@ class GetRequest {
             responseBody['devMessage'], jsonEncode(responseBody['data']));
       } else {
         if (context != null) {
+          // TODO: 加个加载动画
           return showDialog(
               context: context,
               builder: (BuildContext context) => AlertDialog(
@@ -43,6 +44,7 @@ class GetRequest {
       }
     } catch (e) {
       if (context != null) {
+        // TODO: 加个加载动画
         showDialog(
             context: context,
             builder: (BuildContext context) =>

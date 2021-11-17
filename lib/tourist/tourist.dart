@@ -27,7 +27,6 @@ class _TouristState extends State<Tourist> {
   void initState() {
     super.initState();
     _checkBaseInfo(context);
-
     bloggerProfile = UserController.getsBloggerProfile();
   }
 
