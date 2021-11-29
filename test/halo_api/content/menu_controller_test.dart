@@ -1,6 +1,6 @@
 import 'preparation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:super_halo/halo_api/content/menu_controll.dart';
+import 'package:super_halo/halo_api/content/menu_controller.dart';
 
 void main() async {
   await preparation();
