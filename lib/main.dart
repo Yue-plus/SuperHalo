@@ -7,7 +7,6 @@ void main() {
   return runApp(
     MaterialApp(
       title: 'SuperHalo',
-      // home: const Tourist(),
       home: const Home(),
       routes: <String, WidgetBuilder>{
         '/login': (BuildContext context) => const Welcome(),

@@ -20,6 +20,7 @@ class GetRequest {
     final sp = await SharedPreferences.getInstance();
     final hostLink = sp.getString('HOST_LINK')!;
     final accessKey = sp.getString('ACCESS_KEY')!;
+    final adminKey = sp.getString('ADMIN_KEY');
 
     try {
       // 发送 GET 请求

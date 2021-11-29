@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:super_halo/halo_api/content/user_controller.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -10,40 +13,52 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   bool _isShowSidebar = true;
 
-  final _drawer = Drawer(
-    child: ListView(
-      children: const [
-        UserAccountsDrawerHeader(
-          currentAccountPicture: CircleAvatar(
-            child: Icon(Icons.person),
+  late final Future<BloggerProfile?> bloggerProfile;
+
+  Widget _drawer(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        children: [
+          UserAccountsDrawerHeader(
+            currentAccountPicture: const CircleAvatar(
+              child: Icon(Icons.person),
+            ),
+            accountName: FutureBuilder<BloggerProfile?>(
+              future: bloggerProfile,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Text(snapshot.data!.username);
+                }
+                return const Text('Loading...');
+              },
+            ),
+            accountEmail: const Text('Yue_plus@foxmail.com'),
           ),
-          accountName: Text('Yue_plus'),
-          accountEmail: Text('Yue_plus@foxmail.com'),
-        ),
-        ListTile(
-          leading: Icon(Icons.home),
-          title: Text('首页'),
-        ),
-        ListTile(
-          leading: Icon(Icons.archive),
-          title: Text('文章归档'),
-        ),
-        ListTile(
-          leading: Icon(Icons.category),
-          title: Text('默认分类'),
-        ),
-        ListTile(
-          leading: Icon(Icons.info),
-          title: Text('关于'),
-        ),
-        Divider(),
-        ListTile(
-          leading: Icon(Icons.settings),
-          title: Text('设置'),
-        ),
-      ],
-    ),
-  );
+          const ListTile(
+            leading: Icon(Icons.home),
+            title: Text('首页'),
+          ),
+          const ListTile(
+            leading: Icon(Icons.archive),
+            title: Text('文章归档'),
+          ),
+          const ListTile(
+            leading: Icon(Icons.category),
+            title: Text('默认分类'),
+          ),
+          const ListTile(
+            leading: Icon(Icons.info),
+            title: Text('关于'),
+          ),
+          const Divider(),
+          const ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('设置'),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _body() {
     return ListView(
@@ -61,7 +76,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget _buildLG() {
+  Widget _buildLG(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('SuperHalo'),
@@ -76,31 +91,45 @@ class _HomeState extends State<Home> {
       ),
       body: Row(
         children: [
-          Visibility(visible: _isShowSidebar, child: _drawer),
+          Visibility(visible: _isShowSidebar, child: _drawer(context)),
           Expanded(child: _body()),
         ],
       ),
     );
   }
 
-  Widget _buildMD() {
+  Widget _buildMD(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('SuperHalo')),
-      drawer: _drawer,
+      drawer: _drawer(context),
       body: _body(),
     );
+  }
+
+  /// 临时登入（测试用）
+  Future _login() async {
+    final sp = await SharedPreferences.getInstance();
+    sp.setString('HOST_LINK', 'http://localhost:8090/api/');
+    sp.setString('ACCESS_KEY', '123');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _login();
+    bloggerProfile = UserController.getsBloggerProfile(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        if (constraints.maxWidth > 700) {
-          return _buildLG();
-        } else {
-          return _buildMD();
-        }
+        builder: (BuildContext context, BoxConstraints constraints) {
+      if (constraints.maxWidth > 700) {
+        return _buildLG(context);
+      } else {
+        return _buildMD(context);
       }
-    );
+    });
   }
 }
