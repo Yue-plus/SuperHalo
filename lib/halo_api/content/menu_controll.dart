@@ -26,7 +26,6 @@ class Menu {
 class MenuWithTreeView extends Menu {
   final List children;
 
-  @override
   MenuWithTreeView.formJson(Map<String, dynamic> json)
       : children = json['children'],
         super.formJson(json);

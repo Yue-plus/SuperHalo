@@ -6,14 +6,14 @@ void main() async {
   await preparation();
 
   test('content/themes/activation', () async {
-    ActivatedThemeProperty? activation
-      = await ThemeController.getsActivatedThemeProperty();
+    ActivatedThemeProperty? activation =
+        await ThemeController.getsActivatedThemeProperty();
     expect(activation!, activation);
   });
 
   test('content/themes/activation/settings', () async {
-    HaloActivationSettings? activationSettings
-      = await ThemeController.getListsActivatedThemeSettings();
+    HaloActivationSettings? activationSettings =
+        await ThemeController.getListsActivatedThemeSettings();
     expect(activationSettings!, activationSettings);
   });
 }
