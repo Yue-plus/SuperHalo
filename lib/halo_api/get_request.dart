@@ -21,11 +21,16 @@ class GetRequest {
     final hostLink = sp.getString('HOST_LINK')!;
     final accessKey = sp.getString('ACCESS_KEY')!;
     final adminKey = sp.getString('ADMIN_KEY');
+    final Map<String, String>? key;
+
+    // 优先使用 adminKey
+    adminKey != null
+        ? key = {'ADMIN-Authorization': adminKey}
+        : key = {'API-Authorization': accessKey};
 
     try {
       // 发送 GET 请求
-      final response = await http.get(Uri.parse(hostLink + link),
-          headers: {'API-Authorization': accessKey});
+      final response = await http.get(Uri.parse(hostLink + link), headers: key);
       final responseBody = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
