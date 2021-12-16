@@ -6,6 +6,12 @@
 
 使用 Flutter 构建的 [Halo](https://halo.run/) 离线查看与在线管理软件。
 
+## 配置开发环境
+
+1. 克隆本仓库：`git clone git@github.com:Yue-plus/SuperHalo.git`
+2. 获取 [Flutter SDK](https://docs.flutter.dev/get-started/install)
+3. 获取依赖：`flutter pub get`
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
